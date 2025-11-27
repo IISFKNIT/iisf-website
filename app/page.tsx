@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   const events = [
     {
-      name: "Hackathon 2025",
+      name: "Hackathon 2026",
       slug: "hackathon-2025",
       description: "Code, Build, and Win! 48-hour coding marathon",
       date: "January 15-17, 2025",
