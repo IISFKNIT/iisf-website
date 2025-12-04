@@ -1,49 +1,70 @@
 import Link from "next/link";
-import Image from "next/image";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
-      <div className="text-center max-w-4xl">
-        {/* Logo */}
-        <div className="relative w-32 h-32 mx-auto mb-8">
-          <Image
-            src="/iisf-logo-new.jpg"
-            alt="IISF Logo"
-            fill
-            className="object-contain"
-            priority
-          />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <Navbar />
+
+      {/* Header */}
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <h1 className="text-3xl font-bold text-gray-900">
+            Innovation & Incubation Startup Foundation
+          </h1>
+          <p className="mt-2 text-gray-600">Your College Innovation Hub</p>
         </div>
 
-        <h1 className="text-3xl md:text-5xl font-extrabold text-[#1E293B] mb-6 tracking-tight leading-tight">
-          <span className="text-[#1A4DB3]">Innovation Incubation</span> and <span className="text-[#F5A623]">Startup Foundation</span>
-        </h1>
-
-        <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 mb-10 transform hover:scale-105 transition-transform duration-300">
-          <span className="block text-5xl md:text-7xl font-black tracking-widest mb-2">
-            <span className="text-[#1A4DB3]">COMING</span>
-          </span>
-          <span className="block text-5xl md:text-7xl font-black tracking-widest text-[#F5A623]">
-            SOON
-          </span>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-extrabold text-gray-900 sm:text-6xl mb-6">
+            Welcome to IISF
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            Join our community of innovators, entrepreneurs, and tech
+            enthusiasts. Discover exciting events and opportunities!
+          </p>
         </div>
 
-        <p className="text-xl text-gray-600 mb-12 max-w-lg mx-auto leading-relaxed">
-          We are building something extraordinary. The Innovation Incubation and Startup Foundation's new digital experience is on its way.
-        </p>
+        {/* Features Section */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+          <div className="text-center p-8 bg-white rounded-lg shadow-md hover:shadow-xl transition">
+            <div className="text-5xl mb-4">🚀</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              Innovation
+            </h3>
+            <p className="text-gray-600">
+              Foster creativity and develop groundbreaking solutions
+            </p>
+          </div>
+          <div className="text-center p-8 bg-white rounded-lg shadow-md hover:shadow-xl transition">
+            <div className="text-5xl mb-4">💡</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              Incubation
+            </h3>
+            <p className="text-gray-600">
+              Transform ideas into successful startups with mentorship
+            </p>
+          </div>
+          <div className="text-center p-8 bg-white rounded-lg shadow-md hover:shadow-xl transition">
+            <div className="text-5xl mb-4">🤝</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Community</h3>
+            <p className="text-gray-600">
+              Connect with like-minded innovators and entrepreneurs
+            </p>
+          </div>
+        </div>
+      </main>
 
-        {/* Tussle 3.0 Link - Kept accessible as requested implicitly by keeping the form active */}
-        <div className="animate-bounce">
-          <Link
-            href="/forms/tussle3"
-            className="inline-flex items-center px-8 py-4 bg-[#1A4DB3] text-white font-bold rounded-full hover:bg-[#F5A623] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            Register for Tussle 3.0
-            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
+      {/* Footer */}
+      <footer className="bg-white mt-20 py-8 border-t">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">
+          <p>
+            © 2025 Innovation & Incubation Startup Foundation. All rights
+            reserved.
+          </p>
         </div>
       </div>
 
