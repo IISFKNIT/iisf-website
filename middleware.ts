@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // Check if accessing admin routes
   if (pathname.startsWith("/admin") && pathname !== "/admin-login") {
     const isAuthenticated = request.cookies.get("admin-auth")?.value === "true";
 

@@ -40,6 +40,15 @@ const EventSchema = new Schema<IEvent>(
       type: String,
       required: [true, "Event date is required"],
       trim: true,
+      validate: {
+        validator: function (value: string) {
+          const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+          if (!dateRegex.test(value)) return false;
+          const date = new Date(value);
+          return !isNaN(date.getTime());
+        },
+        message: "Invalid date format. Use YYYY-MM-DD (e.g., 2025-01-15)",
+      },
     },
     maxTeamSize: {
       type: Number,

@@ -1,18 +1,18 @@
-import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Registration from "@/models/Registration";
 import Event from "@/models/Event";
+import { successResponse, handleApiError } from "@/lib/api-response";
 
 export async function GET() {
   try {
     await dbConnect();
 
-    // Get all events
-    const events = await Event.find({ isActive: true });
+    const events = await Event.find({ isActive: true }).lean();
 
-    // Get stats for each event
     const statsPromises = events.map(async (event) => {
-      const registrations = await Registration.find({ eventName: event.name });
+      const registrations = await Registration.find({
+        eventName: event.name,
+      }).lean();
 
       const individualCount = registrations.filter((r) => !r.isTeam).length;
       const teamCount = registrations.filter((r) => r.isTeam).length;
@@ -23,6 +23,7 @@ export async function GET() {
 
       return {
         eventName: event.name,
+        eventSlug: event.slug,
         totalRegistrations: registrations.length,
         individualCount,
         teamCount,
@@ -32,15 +33,8 @@ export async function GET() {
 
     const stats = await Promise.all(statsPromises);
 
-    return NextResponse.json({
-      success: true,
-      data: stats,
-    });
-  } catch (error: any) {
-    console.error("Error fetching stats:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to fetch statistics" },
-      { status: 500 }
-    );
+    return successResponse(stats);
+  } catch (error) {
+    return handleApiError(error, "fetching statistics");
   }
 }

@@ -1,63 +1,66 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
+import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 
-interface TeamMember {
+interface Participant {
+  id: string;
   name: string;
+  rollNo: string;
   gender: string;
-  rollNumber: string;
-  contactNumber: string;
+  mobile: string;
   email: string;
 }
 
-interface RegistrationFormProps {
-  eventName: string;
+interface Tussle3FormProps {
+  eventName?: string;
 }
 
-export default function RegistrationForm({ eventName }: RegistrationFormProps) {
-  const [participationType, setParticipationType] = useState<"solo" | "team">(
-    "solo"
-  );
+export default function Tussle3Form({ eventName = "Event" }: Tussle3FormProps) {
+  const [registrationType, setRegistrationType] = useState<
+    "individual" | "team" | null
+  >(null);
+  const [teamName, setTeamName] = useState("");
+  const [participants, setParticipants] = useState<Participant[]>([
+    { id: "1", name: "", rollNo: "", gender: "", mobile: "", email: "" },
+  ]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
   } | null>(null);
 
-  // Team name state
-  const [teamName, setTeamName] = useState("");
+  const addParticipant = () => {
+    setParticipants([
+      ...participants,
+      {
+        id: Date.now().toString(),
+        name: "",
+        rollNo: "",
+        gender: "",
+        mobile: "",
+        email: "",
+      },
+    ]);
+  };
 
-  // Leader/Solo participant state
-  const [leaderName, setLeaderName] = useState("");
-  const [leaderGender, setLeaderGender] = useState("");
-  const [leaderRollNumber, setLeaderRollNumber] = useState("");
-  const [leaderContactNumber, setLeaderContactNumber] = useState("");
-  const [leaderEmail, setLeaderEmail] = useState("");
-
-  // Team members state
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
-
-  const addTeamMember = () => {
-    if (teamMembers.length < 3) {
-      setTeamMembers([
-        ...teamMembers,
-        { name: "", gender: "", rollNumber: "", contactNumber: "", email: "" },
-      ]);
+  const removeParticipant = (id: string) => {
+    if (participants.length > 1) {
+      setParticipants(participants.filter((p) => p.id !== id));
     }
   };
 
-  const removeTeamMember = (index: number) => {
-    setTeamMembers(teamMembers.filter((_, i) => i !== index));
-  };
-
-  const updateTeamMember = (
-    index: number,
-    field: keyof TeamMember,
+  const updateParticipant = (
+    id: string,
+    field: keyof Participant,
     value: string
   ) => {
-    const updated = [...teamMembers];
-    updated[index][field] = value;
-    setTeamMembers(updated);
+    setParticipants(
+      participants.map((p) => (p.id === id ? { ...p, [field]: value } : p))
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,362 +69,331 @@ export default function RegistrationForm({ eventName }: RegistrationFormProps) {
     setMessage(null);
 
     try {
+      const participationType =
+        registrationType === "individual" ? "solo" : "team";
+      const [firstParticipant, ...restParticipants] = participants;
+
+      const requestData = {
+        participationType,
+        teamName: registrationType === "team" ? teamName : undefined,
+        leaderName: firstParticipant.name,
+        leaderGender: firstParticipant.gender,
+        leaderRollNumber: firstParticipant.rollNo,
+        leaderContactNumber: firstParticipant.mobile,
+        leaderEmail: firstParticipant.email,
+        teamMembers:
+          registrationType === "team"
+            ? restParticipants.map((p) => ({
+                name: p.name,
+                gender: p.gender,
+                rollNumber: p.rollNo,
+                contactNumber: p.mobile,
+                email: p.email,
+              }))
+            : [],
+      };
+
       const response = await fetch(
-        `/api/v1/form/${encodeURIComponent(eventName)}`,
+        `/api/registrations/${encodeURIComponent(eventName)}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            participationType,
-            teamName: participationType === "team" ? teamName : undefined,
-            leaderName,
-            leaderGender,
-            leaderRollNumber,
-            leaderContactNumber,
-            leaderEmail,
-            teamMembers: participationType === "team" ? teamMembers : [],
-          }),
+          body: JSON.stringify(requestData),
         }
       );
 
       const data = await response.json();
 
-      console.log("API Response:", data);
-
       if (data.success) {
-        setMessage({ type: "success", text: data.message });
-        // Reset form
+        toast.success(data.message || "Registration successful!");
+        setMessage({
+          type: "success",
+          text: data.message || "Registration successful!",
+        });
+        setRegistrationType(null);
         setTeamName("");
-        setLeaderName("");
-        setLeaderGender("");
-        setLeaderRollNumber("");
-        setLeaderContactNumber("");
-        setLeaderEmail("");
-        setTeamMembers([]);
-        setParticipationType("solo");
+        setParticipants([
+          { id: "1", name: "", rollNo: "", gender: "", mobile: "", email: "" },
+        ]);
       } else {
-        const errorMessage = data.error || "Registration failed";
-        const errorDetails = data.details ? ` - ${data.details}` : "";
-        const errorHint = data.hint ? ` (${data.hint})` : "";
+        toast.error(data.error || "Registration failed");
         setMessage({
           type: "error",
-          text: errorMessage + errorDetails + errorHint,
+          text: data.error || "Registration failed",
         });
       }
-    } catch (error) {
-      console.error("Form submission error:", error);
+    } catch {
+      toast.error("Network error. Please try again.");
       setMessage({ type: "error", text: "Network error. Please try again." });
     } finally {
       setLoading(false);
     }
   };
 
+  const handleTypeSelection = (type: "individual" | "team") => {
+    setRegistrationType(type);
+    setParticipants([
+      { id: "1", name: "", rollNo: "", gender: "", mobile: "", email: "" },
+    ]);
+    if (type === "individual") {
+      setTeamName("");
+    }
+  };
+
   return (
-    <div className="max-w-3xl mx-auto p-8 bg-white rounded-2xl shadow-xl border border-gray-100">
-      <h1 className="text-3xl font-bold text-center mb-8 text-[#1E293B]">
-        Event Registration: <span className="text-[#1A4DB3]">{eventName}</span>
-      </h1>
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
 
-      {message && (
-        <div
-          className={`mb-6 p-4 rounded-lg border ${message.type === "success"
-            ? "bg-green-50 text-green-800 border-green-200"
-            : "bg-red-50 text-red-800 border-red-200"
-            }`}
-        >
-          {message.text}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Participation Type */}
-        <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-          <label className="block text-lg font-semibold mb-4 text-[#1E293B]">
-            Participation Type
-          </label>
-          <div className="flex gap-8">
-            <label className="flex items-center cursor-pointer group">
-              <input
-                type="radio"
-                value="solo"
-                checked={participationType === "solo"}
-                onChange={() => {
-                  setParticipationType("solo");
-                  setTeamMembers([]);
-                  setTeamName("");
-                }}
-                className="w-5 h-5 text-[#1A4DB3] accent-[#1A4DB3] focus:ring-[#1A4DB3]"
-              />
-              <span className="ml-3 text-[#1E293B] font-medium group-hover:text-[#1A4DB3] transition-colors">
-                Solo Participation
-              </span>
-            </label>
-            <label className="flex items-center cursor-pointer group">
-              <input
-                type="radio"
-                value="team"
-                checked={participationType === "team"}
-                onChange={() => setParticipationType("team")}
-                className="w-5 h-5 text-[#1A4DB3] accent-[#1A4DB3] focus:ring-[#1A4DB3]"
-              />
-              <span className="ml-3 text-[#1E293B] font-medium group-hover:text-[#1A4DB3] transition-colors">
-                Team Participation
-              </span>
-            </label>
-          </div>
-        </div>
-
-        {/* Team Name - Only for Team Participation */}
-        {participationType === "team" && (
-          <div className="bg-blue-50/30 p-6 rounded-xl border border-blue-100">
-            <h2 className="text-xl font-semibold mb-4 text-[#1E293B]">
-              Team Information
-            </h2>
-            <div>
-              <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                Team Name *
-              </label>
-              <input
-                type="text"
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
-                required={participationType === "team"}
-                placeholder="Enter your team name"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] placeholder-gray-400 transition-all shadow-sm"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Leader/Participant Details */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-          <h2 className="text-xl font-semibold mb-6 text-[#1E293B] border-b pb-2 border-gray-100">
-            {participationType === "team"
-              ? "Team Leader Details"
-              : "Participant Details"}
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                Name *
-              </label>
-              <input
-                type="text"
-                value={leaderName}
-                onChange={(e) => setLeaderName(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] placeholder-gray-400 transition-all shadow-sm"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                Gender *
-              </label>
-              <select
-                value={leaderGender}
-                onChange={(e) => setLeaderGender(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] transition-all shadow-sm"
-              >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                Roll Number *
-              </label>
-              <input
-                type="text"
-                value={leaderRollNumber}
-                onChange={(e) => setLeaderRollNumber(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] placeholder-gray-400 transition-all shadow-sm"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                Contact Number *
-              </label>
-              <input
-                type="tel"
-                pattern="[0-9]{10}"
-                value={leaderContactNumber}
-                onChange={(e) => setLeaderContactNumber(e.target.value)}
-                required
-                placeholder="10-digit number"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] placeholder-gray-400 transition-all shadow-sm"
-              />
-            </div>
-
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                Email *
-              </label>
-              <input
-                type="email"
-                value={leaderEmail}
-                onChange={(e) => setLeaderEmail(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] placeholder-gray-400 transition-all shadow-sm"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Team Members */}
-        {participationType === "team" && (
-          <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-[#1E293B]">
-                Team Members ({teamMembers.length}/3)
-              </h2>
-              <button
-                type="button"
-                onClick={addTeamMember}
-                disabled={teamMembers.length >= 3}
-                className="px-5 py-2 bg-[#1A4DB3] text-white font-semibold rounded-full hover:bg-[#F5A623] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg"
-              >
-                + Add Member
-              </button>
-            </div>
-
-            {teamMembers.length === 0 && (
-              <p className="text-[#64748B] text-sm mb-4 font-medium italic text-center">
-                Add at least 1 member (Team size: 2-4 including leader)
+      <main className="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-12 lg:px-8">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="px-4 py-6 sm:px-6 sm:py-8 md:p-10">
+            <div className="mb-6 sm:mb-10 text-center relative">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight inline-block relative">
+                {eventName} Registration
+                <div className="absolute -bottom-2 left-0 w-full h-1 bg-orange-500 rounded-full opacity-80"></div>
+              </h1>
+              <p className="mt-4 text-sm sm:text-base text-gray-600">
+                Register for the upcoming event.
               </p>
-            )}
-
-            {teamMembers.map((member, index) => (
+            </div>
+            {message && (
               <div
-                key={index}
-                className="bg-white p-6 rounded-xl mb-4 border border-gray-200 shadow-sm relative"
+                className={`mb-6 p-4 rounded-lg ${
+                  message.type === "success"
+                    ? "bg-green-100 text-green-800"
+                    : "bg-red-100 text-red-800"
+                }`}
               >
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="font-semibold text-[#1E293B]">
-                    Member {index + 1}
-                  </h3>
+                {message.text}
+              </div>
+            )}{" "}
+            {!registrationType ? (
+              <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row justify-center items-center py-8 sm:py-12">
+                <button
+                  onClick={() => handleTypeSelection("individual")}
+                  className="flex flex-col items-center justify-center w-full sm:w-64 h-40 sm:h-48 bg-white border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:shadow-lg transition-all group"
+                >
+                  <div className="w-12 sm:w-16 h-12 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-orange-500/10 transition-colors">
+                    <svg
+                      className="w-6 sm:w-8 h-6 sm:h-8 text-gray-500 group-hover:text-orange-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
+                  <span className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-orange-500">
+                    Register as Individual
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => handleTypeSelection("team")}
+                  className="flex flex-col items-center justify-center w-full sm:w-64 h-40 sm:h-48 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:shadow-lg transition-all group"
+                >
+                  <div className="w-12 sm:w-16 h-12 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-blue-500/10 transition-colors">
+                    <svg
+                      className="w-6 sm:w-8 h-6 sm:h-8 text-gray-500 group-hover:text-blue-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                  </div>
+                  <span className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-blue-500">
+                    Register as Team
+                  </span>
+                </button>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500"
+              >
+                <div className="flex justify-start">
                   <button
                     type="button"
-                    onClick={() => removeTeamMember(index)}
-                    className="text-red-500 hover:text-red-700 font-semibold text-sm transition-colors"
+                    onClick={() => setRegistrationType(null)}
+                    className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1"
                   >
-                    Remove
+                    ← Back to selection
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                      Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={member.name}
-                      onChange={(e) =>
-                        updateTeamMember(index, "name", e.target.value)
-                      }
+                {registrationType === "team" && (
+                  <div className="space-y-4">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-900 border-b pb-2">
+                      Team Information
+                    </h2>
+                    <Input
+                      label="Team Name"
+                      placeholder="Enter your team name"
+                      value={teamName}
+                      onChange={(e) => setTeamName(e.target.value)}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] placeholder-gray-400 transition-all shadow-sm"
                     />
                   </div>
+                )}
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                      Gender *
-                    </label>
-                    <select
-                      value={member.gender}
-                      onChange={(e) =>
-                        updateTeamMember(index, "gender", e.target.value)
-                      }
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] transition-all shadow-sm"
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-2 gap-2">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+                      {registrationType === "individual"
+                        ? "Participant Details"
+                        : "Team Members"}
+                    </h2>
+                    {registrationType === "team" && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={addParticipant}
+                        className="text-orange-500 border-orange-500 hover:bg-orange-500/10 w-full sm:w-auto"
+                      >
+                        + Add Member
+                      </Button>
+                    )}
+                  </div>
+
+                  {participants.map((participant, index) => (
+                    <div
+                      key={participant.id}
+                      className="p-4 sm:p-6 bg-gray-50 rounded-xl border border-gray-200 relative transition-all hover:shadow-md"
                     >
-                      <option value="">Select Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
+                      <div className="flex justify-between items-center mb-4">
+                        <h3 className="font-medium text-gray-900">
+                          {registrationType === "individual"
+                            ? "Participant Information"
+                            : `Member ${index + 1}`}
+                        </h3>
+                        {registrationType === "team" &&
+                          participants.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => removeParticipant(participant.id)}
+                              className="text-red-500 hover:text-red-700 text-sm font-medium"
+                            >
+                              Remove
+                            </button>
+                          )}
+                      </div>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                      Roll Number *
-                    </label>
-                    <input
-                      type="text"
-                      value={member.rollNumber}
-                      onChange={(e) =>
-                        updateTeamMember(index, "rollNumber", e.target.value)
-                      }
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] placeholder-gray-400 transition-all shadow-sm"
-                    />
-                  </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <Input
+                          label="Full Name"
+                          placeholder="John Doe"
+                          value={participant.name}
+                          onChange={(e) =>
+                            updateParticipant(
+                              participant.id,
+                              "name",
+                              e.target.value
+                            )
+                          }
+                          required
+                        />
+                        <Input
+                          label="Roll Number"
+                          placeholder="e.g. 123456"
+                          value={participant.rollNo}
+                          onChange={(e) =>
+                            updateParticipant(
+                              participant.id,
+                              "rollNo",
+                              e.target.value
+                            )
+                          }
+                          required
+                        />
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                      Contact Number *
-                    </label>
-                    <input
-                      type="tel"
-                      pattern="[0-9]{10}"
-                      value={member.contactNumber}
-                      onChange={(e) =>
-                        updateTeamMember(index, "contactNumber", e.target.value)
-                      }
-                      required
-                      placeholder="10-digit number"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] placeholder-gray-400 transition-all shadow-sm"
-                    />
-                  </div>
+                        <div className="w-full">
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Gender
+                          </label>
+                          <select
+                            className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            value={participant.gender}
+                            onChange={(e) =>
+                              updateParticipant(
+                                participant.id,
+                                "gender",
+                                e.target.value
+                              )
+                            }
+                            required
+                          >
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
 
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium mb-2 text-[#64748B]">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      value={member.email}
-                      onChange={(e) =>
-                        updateTeamMember(index, "email", e.target.value)
-                      }
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1A4DB3] focus:border-transparent bg-white text-[#1E293B] placeholder-gray-400 transition-all shadow-sm"
-                    />
-                  </div>
+                        <Input
+                          label="Mobile Number"
+                          type="tel"
+                          placeholder="9876543210"
+                          value={participant.mobile}
+                          onChange={(e) =>
+                            updateParticipant(
+                              participant.id,
+                              "mobile",
+                              e.target.value
+                            )
+                          }
+                          required
+                        />
+
+                        <div className="md:col-span-2">
+                          <Input
+                            label="Email ID"
+                            type="email"
+                            placeholder="john@example.com"
+                            value={participant.email}
+                            onChange={(e) =>
+                              updateParticipant(
+                                participant.id,
+                                "email",
+                                e.target.value
+                              )
+                            }
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ))}
+
+                <div className="pt-4">
+                  <Button
+                    type="submit"
+                    className="w-full md:w-auto md:min-w-[200px]"
+                    size="lg"
+                    disabled={loading}
+                  >
+                    {loading ? "Submitting..." : "Submit Registration"}
+                  </Button>
+                </div>
+              </form>
+            )}
           </div>
-        )}
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          disabled={
-            loading || (participationType === "team" && teamMembers.length < 1)
-          }
-          className="w-full py-4 px-6 bg-[#1A4DB3] text-white font-bold rounded-full hover:bg-[#F5A623] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg"
-        >
-          {loading ? "Submitting..." : "Register"}
-        </button>
-
-        {participationType === "team" && teamMembers.length < 1 && (
-          <p className="text-red-500 text-sm text-center font-medium">
-            Please add at least 1 team member to register as a team
-          </p>
-        )}
-      </form>
+        </div>
+      </main>
     </div>
   );
 }

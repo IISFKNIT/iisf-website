@@ -1,4 +1,4 @@
-import Tussle3Form from "@/components/Tussle3Form";
+import RegistrationForm from "@/components/RegistrationForm";
 import dbConnect from "@/lib/mongodb";
 import Event from "@/models/Event";
 import { notFound } from "next/navigation";
@@ -13,14 +13,10 @@ export default async function EventRegistrationPage({
   params,
 }: EventRegistrationProps) {
   const { eventname } = await params;
-  const decodedSlug = decodeURIComponent(eventname);
+  const slug = decodeURIComponent(eventname);
 
-  // Fetch the actual event from database to get correct name
   await dbConnect();
-  const event = await Event.findOne({
-    slug: decodedSlug,
-    isActive: true,
-  }).lean();
+  const event = await Event.findOne({ slug, isActive: true }).lean();
 
   if (!event) {
     notFound();
@@ -28,7 +24,7 @@ export default async function EventRegistrationPage({
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
-      <Tussle3Form eventName={event.name} />
+      <RegistrationForm eventName={event.name} />
     </main>
   );
 }

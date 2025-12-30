@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AdminLogin() {
   const [password, setPassword] = useState("");
@@ -15,7 +16,7 @@ export default function AdminLogin() {
     setError("");
 
     try {
-      const response = await fetch("/api/admin/login", {
+      const response = await fetch("/api/auth", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
@@ -24,11 +25,14 @@ export default function AdminLogin() {
       const data = await response.json();
 
       if (data.success) {
+        toast.success("Login successful!");
         router.push("/admin");
       } else {
+        toast.error(data.error || "Invalid password");
         setError(data.error || "Invalid password");
       }
-    } catch (error) {
+    } catch {
+      toast.error("Login failed. Please try again.");
       setError("Login failed. Please try again.");
     } finally {
       setLoading(false);

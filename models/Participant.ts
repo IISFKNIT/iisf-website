@@ -68,10 +68,7 @@ const ParticipantSchema = new Schema<IParticipant>(
   }
 );
 
-// Compound index to prevent duplicate participant emails per registration
 ParticipantSchema.index({ registrationId: 1, email: 1 }, { unique: true });
-
-// Index for faster queries
 ParticipantSchema.index({ rollNumber: 1 });
 
 const Participant =

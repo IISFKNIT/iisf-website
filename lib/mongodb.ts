@@ -27,8 +27,8 @@ async function dbConnect(): Promise<typeof mongoose> {
       "Please define the MONGODB_URI environment variable inside .env.local"
     );
   }
+
   if (cached.conn) {
-    console.log("✅ Using cached MongoDB connection");
     return cached.conn;
   }
 
@@ -41,15 +41,10 @@ async function dbConnect(): Promise<typeof mongoose> {
       minPoolSize: 2,
     };
 
-    console.log("🔄 Connecting to MongoDB:", MONGODB_URI);
     cached.promise = mongoose
       .connect(MONGODB_URI, opts)
-      .then((mongoose) => {
-        console.log("✅ MongoDB connected successfully");
-        return mongoose;
-      })
+      .then((mongoose) => mongoose)
       .catch((error) => {
-        console.error("❌ MongoDB connection failed:", error.message);
         cached.promise = null;
         throw error;
       });
@@ -59,7 +54,6 @@ async function dbConnect(): Promise<typeof mongoose> {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
-    console.error("❌ MongoDB connection error:", e);
     throw e;
   }
 

@@ -10,7 +10,6 @@ export interface IRegistration extends Document {
   updatedAt: Date;
 }
 
-// Registration Schema - Main document for each registration
 const RegistrationSchema = new Schema<IRegistration>(
   {
     eventName: {
@@ -34,11 +33,9 @@ const RegistrationSchema = new Schema<IRegistration>(
       },
       validate: {
         validator: function (this: any, value: string) {
-          // If isTeam is true, teamName must be provided
           if (this.isTeam && (!value || value.trim() === "")) {
             return false;
           }
-          // If isTeam is false, teamName should be empty
           if (!this.isTeam && value && value.trim() !== "") {
             return false;
           }
@@ -82,17 +79,14 @@ const RegistrationSchema = new Schema<IRegistration>(
   }
 );
 
-// Compound index to prevent duplicate registrations for same event by same leader
 RegistrationSchema.index({ eventName: 1, leaderEmail: 1 }, { unique: true });
 
-// Virtual populate for participants
 RegistrationSchema.virtual("participants", {
   ref: "Participant",
   localField: "_id",
   foreignField: "registrationId",
 });
 
-// Ensure virtuals are included when converting to JSON
 RegistrationSchema.set("toJSON", { virtuals: true });
 RegistrationSchema.set("toObject", { virtuals: true });
 
