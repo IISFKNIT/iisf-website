@@ -1,6 +1,3 @@
-// Type definitions for IISF Event Registration System
-
-// Participant interface matching the Participant model
 export interface Participant {
   _id?: string;
   registrationId: string;
@@ -14,7 +11,6 @@ export interface Participant {
   updatedAt?: Date;
 }
 
-// Registration interface matching the Registration model
 export interface Registration {
   _id?: string;
   eventName: string;
@@ -27,7 +23,6 @@ export interface Registration {
   updatedAt?: Date;
 }
 
-// Frontend form data interface (for RegistrationForm component)
 export interface TeamMember {
   name: string;
   gender: "Male" | "Female" | "Other";
@@ -47,7 +42,6 @@ export interface RegistrationFormData {
   teamMembers: TeamMember[];
 }
 
-// API Response interfaces
 export interface APIResponse<T = any> {
   success: boolean;
   message?: string;
@@ -68,7 +62,6 @@ export interface RegistrationResponse {
   participantsCreated: number;
 }
 
-// Event interface (for future event management)
 export interface Event {
   _id?: string;
   name: string;
