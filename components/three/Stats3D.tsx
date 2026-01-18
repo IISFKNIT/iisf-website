@@ -41,12 +41,12 @@ function StatItem({ position, value, label, color, delay = 0 }: StatItemProps) {
               className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight"
               style={{
                 color: color,
-                textShadow: `0 0 40px ${color}80, 0 0 80px ${color}40`,
+                // textShadow: `0 0 40px ${color}80, 0 0 80px ${color}40`, // Too heavy for light mode
               }}
             >
               {value}
             </div>
-            <div className="text-sm sm:text-base text-white/80 font-medium mt-2 uppercase tracking-widest">
+            <div className="text-sm sm:text-base text-slate-500 font-medium mt-2 uppercase tracking-widest">
               {label}
             </div>
           </div>
@@ -55,7 +55,7 @@ function StatItem({ position, value, label, color, delay = 0 }: StatItemProps) {
         {/* Glass platform beneath stat */}
         <mesh position={[0, -0.8, 0]} rotation={[-Math.PI / 2, 0, 0]}>
           <circleGeometry args={[1.2, 32]} />
-          <meshBasicMaterial color={color} transparent opacity={0.1} />
+          <meshBasicMaterial color={color} transparent opacity={0.05} />
         </mesh>
       </group>
     </Float>
@@ -80,7 +80,7 @@ function ConnectionLine({
       color={color}
       lineWidth={1}
       transparent
-      opacity={0.3}
+      opacity={0.2}
     />
   );
 }
@@ -127,9 +127,9 @@ export default function Stats3D() {
       ))}
 
       {/* Connection lines between stats */}
-      <ConnectionLine start={[-4, 0.5, 0]} end={[-1.3, 1, 0]} color="#ffffff" />
-      <ConnectionLine start={[-1.3, 1, 0]} end={[1.3, 1, 0]} color="#ffffff" />
-      <ConnectionLine start={[1.3, 1, 0]} end={[4, 0.5, 0]} color="#ffffff" />
+      <ConnectionLine start={[-4, 0.5, 0]} end={[-1.3, 1, 0]} color="#94a3b8" />
+      <ConnectionLine start={[-1.3, 1, 0]} end={[1.3, 1, 0]} color="#94a3b8" />
+      <ConnectionLine start={[1.3, 1, 0]} end={[4, 0.5, 0]} color="#94a3b8" />
     </group>
   );
 }

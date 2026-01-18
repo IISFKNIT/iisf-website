@@ -2,7 +2,7 @@
 
 import { Suspense, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, Stars, ContactShadows, Preload } from "@react-three/drei";
+import { Environment, ContactShadows, Preload } from "@react-three/drei";
 import * as THREE from "three";
 
 // Background gradient mesh
@@ -10,7 +10,7 @@ function BackgroundGradient() {
   return (
     <mesh position={[0, 0, -30]} scale={[100, 100, 1]}>
       <planeGeometry />
-      <meshBasicMaterial color="#020617" />
+      <meshBasicMaterial color="#f8fafc" />
     </mesh>
   );
 }
@@ -18,7 +18,7 @@ function BackgroundGradient() {
 // Animated ambient particles
 function AmbientParticles() {
   const particlesRef = useRef<THREE.Points>(null);
-  const count = 200;
+  const count = 40;
 
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
@@ -54,10 +54,10 @@ function AmbientParticles() {
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.08}
+        size={0.12} // Slightly larger for visibility
         vertexColors
         transparent
-        opacity={0.8}
+        opacity={0.6}
         sizeAttenuation
       />
     </points>
@@ -97,25 +97,25 @@ function AuroraBlobs() {
       {/* Orange blob */}
       <mesh ref={blob1Ref} position={[-8, 5, -20]}>
         <sphereGeometry args={[8, 32, 32]} />
-        <meshBasicMaterial color="#f97316" transparent opacity={0.15} />
+        <meshBasicMaterial color="#f97316" transparent opacity={0.08} />
       </mesh>
 
       {/* Blue blob */}
       <mesh ref={blob2Ref} position={[8, -3, -25]}>
         <sphereGeometry args={[10, 32, 32]} />
-        <meshBasicMaterial color="#3b82f6" transparent opacity={0.12} />
+        <meshBasicMaterial color="#3b82f6" transparent opacity={0.06} />
       </mesh>
 
       {/* Cyan blob */}
       <mesh ref={blob3Ref} position={[0, 8, -22]}>
         <sphereGeometry args={[7, 32, 32]} />
-        <meshBasicMaterial color="#06b6d4" transparent opacity={0.1} />
+        <meshBasicMaterial color="#06b6d4" transparent opacity={0.05} />
       </mesh>
 
       {/* Purple blob */}
       <mesh ref={blob4Ref} position={[-5, -6, -18]}>
         <sphereGeometry args={[6, 32, 32]} />
-        <meshBasicMaterial color="#8b5cf6" transparent opacity={0.1} />
+        <meshBasicMaterial color="#8b5cf6" transparent opacity={0.05} />
       </mesh>
     </>
   );
@@ -126,19 +126,19 @@ function CinematicLighting() {
   return (
     <>
       {/* Main ambient */}
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.8} />
 
       {/* Key light - warm */}
       <directionalLight
         position={[10, 10, 5]}
-        intensity={0.8}
+        intensity={1.2}
         color="#ffffff"
       />
 
       {/* Orange rim light */}
       <pointLight
         position={[-10, 5, 5]}
-        intensity={2}
+        intensity={1.5}
         color="#f97316"
         distance={30}
       />
@@ -146,7 +146,7 @@ function CinematicLighting() {
       {/* Blue rim light */}
       <pointLight
         position={[10, -5, 5]}
-        intensity={2}
+        intensity={1.5}
         color="#3b82f6"
         distance={30}
       />
@@ -154,7 +154,7 @@ function CinematicLighting() {
       {/* Cyan accent */}
       <pointLight
         position={[0, 10, -5]}
-        intensity={1}
+        intensity={0.8}
         color="#06b6d4"
         distance={25}
       />
@@ -163,7 +163,7 @@ function CinematicLighting() {
       <pointLight
         position={[0, -10, 0]}
         intensity={0.5}
-        color="#1e40af"
+        color="#e2e8f0"
         distance={20}
       />
     </>
@@ -217,24 +217,13 @@ export default function Scene3D({ children }: Scene3DProps) {
         <Suspense fallback={<Loader />}>
           {/* Background */}
           <BackgroundGradient />
-          <color attach="background" args={["#020617"]} />
+          <color attach="background" args={["#f8fafc"]} />
 
           {/* Lighting */}
           <CinematicLighting />
 
           {/* Aurora effect */}
           <AuroraBlobs />
-
-          {/* Stars */}
-          <Stars
-            radius={80}
-            depth={60}
-            count={1500}
-            factor={4}
-            saturation={0}
-            fade
-            speed={0.5}
-          />
 
           {/* Ambient particles */}
           <AmbientParticles />
@@ -245,18 +234,20 @@ export default function Scene3D({ children }: Scene3DProps) {
           {/* Camera movement */}
           <CameraController />
 
-          {/* Contact shadows for grounding */}
+          {/* Contact shadows for grounding - Optimized */}
           <ContactShadows
             position={[0, -4, 0]}
-            opacity={0.4}
+            opacity={0.3}
             scale={20}
-            blur={2}
+            blur={2.5}
             far={4}
-            color="#000000"
+            color="#94a3b8"
+            resolution={256}
+            frames={1}
           />
 
           {/* Environment for reflections */}
-          <Environment preset="night" />
+          <Environment preset="studio" />
 
           {/* Preload assets */}
           <Preload all />

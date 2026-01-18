@@ -37,14 +37,14 @@ const staggerContainer = {
 
 export default function EventsClient({ events }: EventsClientProps) {
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-white text-slate-900">
       <Navbar />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Background effects */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.15),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(59,130,246,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(59,130,246,0.05),transparent_50%)]" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.div
@@ -67,14 +67,14 @@ export default function EventsClient({ events }: EventsClientProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <span className="text-white">Upcoming </span>
-            <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500 bg-clip-text text-transparent">
+            <span className="text-slate-900">Upcoming </span>
+            <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
               Events
             </span>
           </motion.h1>
 
           <motion.p
-            className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto"
+            className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -94,13 +94,13 @@ export default function EventsClient({ events }: EventsClientProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-slate-800/50 flex items-center justify-center">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-slate-100 flex items-center justify-center">
                 <span className="text-5xl">📅</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-3">
+              <h3 className="text-2xl font-bold text-slate-900 mb-3">
                 No Events Available
               </h3>
-              <p className="text-slate-400 max-w-md mx-auto">
+              <p className="text-slate-500 max-w-md mx-auto">
                 Check back soon for exciting opportunities and upcoming events!
               </p>
             </motion.div>
@@ -111,11 +111,11 @@ export default function EventsClient({ events }: EventsClientProps) {
               initial="hidden"
               animate="visible"
             >
-              {events.map((event, index) => (
+                {events.map((event, index) => (
                 <motion.div
                   key={event.slug}
                   variants={fadeInUp}
-                  className="group relative rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-sm overflow-hidden hover:border-orange-500/50 transition-all duration-300"
+                  className="group relative rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden hover:border-orange-500/50 transition-all duration-300"
                   whileHover={{ y: -5, scale: 1.02 }}
                 >
                   {/* Gradient overlay */}
@@ -133,17 +133,17 @@ export default function EventsClient({ events }: EventsClientProps) {
                     </div>
 
                     {/* Event name */}
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors">
+                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-orange-500 transition-colors">
                       {event.name}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-slate-400 text-sm mb-4 line-clamp-2">
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-2">
                       {event.description}
                     </p>
 
                     {/* Date */}
-                    <div className="flex items-center gap-2 text-sm text-orange-400 font-medium mb-6">
+                    <div className="flex items-center gap-2 text-sm text-orange-600 font-medium mb-6">
                       <svg
                         className="w-4 h-4"
                         fill="none"
@@ -200,9 +200,9 @@ export default function EventsClient({ events }: EventsClientProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
               Why Join{" "}
-              <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
                 IISF?
               </span>
             </h2>
@@ -234,7 +234,7 @@ export default function EventsClient({ events }: EventsClientProps) {
             ].map((feature, index) => (
               <motion.div
                 key={feature.title}
-                className="relative rounded-2xl border border-white/10 bg-slate-900/50 p-8 text-center hover:border-white/20 transition-all"
+                className="relative rounded-2xl border border-slate-200 bg-white p-8 text-center hover:border-slate-300 shadow-lg transition-all"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -242,14 +242,14 @@ export default function EventsClient({ events }: EventsClientProps) {
                 whileHover={{ y: -5 }}
               >
                 <div
-                  className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-5 shadow-lg`}
+                  className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-5 shadow-lg text-white`}
                 >
                   <span className="text-3xl">{feature.icon}</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-slate-400 text-sm">{feature.description}</p>
+                <p className="text-slate-600 text-sm">{feature.description}</p>
               </motion.div>
             ))}
           </div>

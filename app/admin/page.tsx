@@ -291,34 +291,34 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin" />
-          <p className="text-slate-400">Loading dashboard...</p>
+          <p className="text-slate-500">Loading dashboard...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
 
       {/* Header */}
-      <div className="border-b border-white/10 bg-slate-900/50 pt-20 sm:pt-24">
+      <div className="border-b border-slate-200 bg-white shadow-sm pt-20 sm:pt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
                 Admin Dashboard
               </h1>
-              <p className="mt-1 text-slate-400">
+              <p className="mt-1 text-slate-500">
                 Manage events and view analytics
               </p>
             </div>
             <button
               onClick={handleLogout}
-              className="px-4 py-2.5 bg-red-500/20 text-red-400 border border-red-500/30 rounded-xl hover:bg-red-500/30 transition font-medium text-sm w-full sm:w-auto"
+              className="px-4 py-2.5 bg-red-50 text-red-600 border border-red-200 rounded-xl hover:bg-red-100 transition font-medium text-sm w-full sm:w-auto"
             >
               Logout
             </button>
@@ -329,36 +329,36 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Statistics Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
-          <div className="rounded-xl border border-white/10 bg-slate-900/50 p-5 sm:p-6">
-            <h3 className="text-slate-400 text-xs sm:text-sm font-medium">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
+            <h3 className="text-slate-500 text-xs sm:text-sm font-medium">
               Total Events
             </h3>
-            <p className="text-2xl sm:text-3xl font-bold text-white mt-2">
+            <p className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
               {events.length}
             </p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-slate-900/50 p-5 sm:p-6">
-            <h3 className="text-slate-400 text-xs sm:text-sm font-medium">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
+            <h3 className="text-slate-500 text-xs sm:text-sm font-medium">
               Registrations
             </h3>
-            <p className="text-2xl sm:text-3xl font-bold text-orange-400 mt-2">
+            <p className="text-2xl sm:text-3xl font-bold text-orange-500 mt-2">
               {stats.reduce((sum, s) => sum + s.totalRegistrations, 0)}
             </p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-slate-900/50 p-5 sm:p-6 col-span-2 sm:col-span-1">
-            <h3 className="text-slate-400 text-xs sm:text-sm font-medium">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6 col-span-2 sm:col-span-1 shadow-sm">
+            <h3 className="text-slate-500 text-xs sm:text-sm font-medium">
               Participants
             </h3>
-            <p className="text-2xl sm:text-3xl font-bold text-blue-400 mt-2">
+            <p className="text-2xl sm:text-3xl font-bold text-blue-600 mt-2">
               {stats.reduce((sum, s) => sum + s.totalParticipants, 0)}
             </p>
           </div>
         </div>
 
         {/* Events Section */}
-        <div className="rounded-xl border border-white/10 bg-slate-900/50 mb-8">
-          <div className="px-5 sm:px-6 py-4 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <h2 className="text-lg sm:text-xl font-bold text-white">Events</h2>
+        <div className="rounded-xl border border-slate-200 bg-white shadow-sm mb-8">
+          <div className="px-5 sm:px-6 py-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900">Events</h2>
             <button
               onClick={() => setShowEventForm(true)}
               className="px-4 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl hover:opacity-90 transition font-medium text-sm w-full sm:w-auto"
@@ -369,7 +369,7 @@ export default function AdminDashboard() {
 
           <div className="p-5 sm:p-6">
             {events.length === 0 ? (
-              <p className="text-slate-400 text-center py-8 text-sm sm:text-base">
+              <p className="text-slate-500 text-center py-8 text-sm sm:text-base">
                 No events yet. Create your first event!
               </p>
             ) : (
@@ -381,28 +381,28 @@ export default function AdminDashboard() {
                   return (
                     <div
                       key={event._id}
-                      className="rounded-xl border border-white/10 bg-slate-800/30 p-4 sm:p-5 hover:border-white/20 transition"
+                      className="rounded-xl border border-slate-200 bg-slate-50 p-4 sm:p-5 hover:border-slate-300 transition"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                         <div className="flex-1">
                           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                            <h3 className="text-base sm:text-lg font-semibold text-white">
+                            <h3 className="text-base sm:text-lg font-semibold text-slate-900">
                               {event.name}
                             </h3>
                             <span
                               className={`px-2.5 py-1 text-xs font-medium rounded-full ${
                                 event.isActive
-                                  ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                                  : "bg-slate-500/20 text-slate-400 border border-slate-500/30"
+                                  ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
+                                  : "bg-slate-200 text-slate-600 border border-slate-300"
                               }`}
                             >
                               {event.isActive ? "Active" : "Inactive"}
                             </span>
                           </div>
-                          <p className="text-sm text-slate-400 mt-2">
+                          <p className="text-sm text-slate-600 mt-2">
                             {event.description}
                           </p>
-                          <p className="text-xs text-orange-400 mt-2 flex items-center gap-1.5">
+                          <p className="text-xs text-orange-600 mt-2 flex items-center gap-1.5">
                             <svg
                               className="w-4 h-4"
                               fill="none"
@@ -422,13 +422,13 @@ export default function AdminDashboard() {
                         <div className="flex items-center sm:items-start justify-between sm:justify-end gap-4">
                           {eventStat && (
                             <div className="text-left sm:text-right">
-                              <p className="text-xl sm:text-2xl font-bold text-orange-400">
+                              <p className="text-xl sm:text-2xl font-bold text-orange-500">
                                 {eventStat.totalRegistrations}
                               </p>
                               <p className="text-xs text-slate-500">
                                 registrations
                               </p>
-                              <p className="text-xs text-slate-400 mt-1">
+                              <p className="text-xs text-slate-500 mt-1">
                                 {eventStat.individualCount} solo |{" "}
                                 {eventStat.teamCount} teams
                               </p>
@@ -436,7 +436,7 @@ export default function AdminDashboard() {
                           )}
                           <button
                             onClick={() => openDeleteEventDialog(event.name)}
-                            className="px-3 py-2 bg-red-500/20 text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/30 transition text-xs sm:text-sm font-medium whitespace-nowrap"
+                            className="px-3 py-2 bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition text-xs sm:text-sm font-medium whitespace-nowrap"
                           >
                             🗑️ Delete
                           </button>
@@ -452,12 +452,12 @@ export default function AdminDashboard() {
 
         {/* Event Registration Details */}
         {stats.length > 0 && (
-          <div className="rounded-xl border border-white/10 bg-slate-900/50">
-            <div className="px-5 sm:px-6 py-4 border-b border-white/10">
-              <h2 className="text-lg sm:text-xl font-bold text-white">
+          <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div className="px-5 sm:px-6 py-4 border-b border-slate-200">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
                 Detailed Registration Data
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1">
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
                 Click on an event to view participant details
               </p>
             </div>
@@ -466,44 +466,44 @@ export default function AdminDashboard() {
                 {stats.map((stat, index) => (
                   <div
                     key={index}
-                    className="rounded-xl border border-white/10 overflow-hidden"
+                    className="rounded-xl border border-slate-200 overflow-hidden"
                   >
                     {/* Event Header - Clickable */}
                     <div
                       onClick={() => toggleEventExpanded(stat.eventName)}
-                      className="bg-slate-800/50 px-4 sm:px-6 py-4 cursor-pointer hover:bg-slate-800/70 transition"
+                      className="bg-slate-50 px-4 sm:px-6 py-4 cursor-pointer hover:bg-slate-100 transition"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <span className="text-lg text-orange-400">
+                          <span className="text-lg text-orange-500">
                             {expandedEvents.has(stat.eventName) ? "▼" : "▶"}
                           </span>
-                          <h3 className="text-sm sm:text-lg font-semibold text-white">
+                          <h3 className="text-sm sm:text-lg font-semibold text-slate-900">
                             {stat.eventName}
                           </h3>
                         </div>
                         <div className="grid grid-cols-4 gap-3 sm:flex sm:gap-6 text-xs sm:text-sm ml-7 sm:ml-0">
                           <div className="text-center">
                             <p className="text-slate-500 text-xs">Regs</p>
-                            <p className="font-bold text-blue-400">
+                            <p className="font-bold text-blue-600">
                               {stat.totalRegistrations}
                             </p>
                           </div>
                           <div className="text-center">
                             <p className="text-slate-500 text-xs">Total</p>
-                            <p className="font-bold text-orange-400">
+                            <p className="font-bold text-orange-500">
                               {stat.totalParticipants}
                             </p>
                           </div>
                           <div className="text-center">
                             <p className="text-slate-500 text-xs">Solo</p>
-                            <p className="font-bold text-emerald-400">
+                            <p className="font-bold text-emerald-600">
                               {stat.individualCount}
                             </p>
                           </div>
                           <div className="text-center">
                             <p className="text-slate-500 text-xs">Teams</p>
-                            <p className="font-bold text-purple-400">
+                            <p className="font-bold text-purple-600">
                               {stat.teamCount}
                             </p>
                           </div>
@@ -513,14 +513,14 @@ export default function AdminDashboard() {
 
                     {/* Expanded Details */}
                     {expandedEvents.has(stat.eventName) && (
-                      <div className="p-4 sm:p-6 bg-slate-900/30">
+                      <div className="p-4 sm:p-6 bg-slate-50">
                         {!eventDetails[stat.eventName] ? (
-                          <div className="text-center py-8 text-slate-400 text-sm">
+                          <div className="text-center py-8 text-slate-500 text-sm">
                             Loading details...
                           </div>
                         ) : eventDetails[stat.eventName].registrations
                             .length === 0 ? (
-                          <div className="text-center py-8 text-slate-400">
+                          <div className="text-center py-8 text-slate-500">
                             No registrations yet
                           </div>
                         ) : (
@@ -529,19 +529,19 @@ export default function AdminDashboard() {
                               (reg, regIndex) => (
                                 <div
                                   key={reg._id}
-                                  className="rounded-xl border border-white/10 bg-slate-800/50 p-4"
+                                  className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
                                 >
                                   <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-2">
                                     <div>
                                       <div className="flex flex-wrap items-center gap-2">
-                                        <span className="font-semibold text-white text-sm sm:text-base">
+                                        <span className="font-semibold text-slate-900 text-sm sm:text-base">
                                           {reg.isTeam ? (
                                             <>🏆 Team: {reg.teamName}</>
                                           ) : (
                                             <>👤 Individual</>
                                           )}
                                         </span>
-                                        <span className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-1 rounded-full">
+                                        <span className="text-xs bg-blue-100 text-blue-600 border border-blue-200 px-2 py-1 rounded-full">
                                           {reg.participants.length} participant
                                           {reg.participants.length !== 1
                                             ? "s"
@@ -554,7 +554,7 @@ export default function AdminDashboard() {
                                         ).toLocaleDateString()}
                                       </p>
                                     </div>
-                                    <button
+                                      <button
                                       onClick={() =>
                                         openDeleteRegistrationDialog(
                                           reg._id,
@@ -562,7 +562,7 @@ export default function AdminDashboard() {
                                           reg.teamName
                                         )
                                       }
-                                      className="px-3 py-1.5 bg-red-500/20 text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/30 transition text-xs font-medium self-start"
+                                      className="px-3 py-1.5 bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition text-xs font-medium self-start"
                                     >
                                       🗑️ Delete
                                     </button>
@@ -571,56 +571,56 @@ export default function AdminDashboard() {
                                   {/* Participants Table - Mobile Cards / Desktop Table */}
                                   <div className="hidden sm:block overflow-x-auto">
                                     <table className="w-full text-sm min-w-[600px]">
-                                      <thead className="bg-slate-700/50">
+                                      <thead className="bg-slate-50">
                                         <tr>
-                                          <th className="px-3 py-2.5 text-left font-medium text-slate-300 text-xs">
+                                          <th className="px-3 py-2.5 text-left font-medium text-slate-500 text-xs">
                                             Name
                                           </th>
-                                          <th className="px-3 py-2.5 text-left font-medium text-slate-300 text-xs">
+                                          <th className="px-3 py-2.5 text-left font-medium text-slate-500 text-xs">
                                             Email
                                           </th>
-                                          <th className="px-3 py-2.5 text-left font-medium text-slate-300 text-xs">
+                                          <th className="px-3 py-2.5 text-left font-medium text-slate-500 text-xs">
                                             Roll No
                                           </th>
-                                          <th className="px-3 py-2.5 text-left font-medium text-slate-300 text-xs">
+                                          <th className="px-3 py-2.5 text-left font-medium text-slate-500 text-xs">
                                             Contact
                                           </th>
-                                          <th className="px-3 py-2.5 text-left font-medium text-slate-300 text-xs">
+                                          <th className="px-3 py-2.5 text-left font-medium text-slate-500 text-xs">
                                             Gender
                                           </th>
-                                          <th className="px-3 py-2.5 text-left font-medium text-slate-300 text-xs">
+                                          <th className="px-3 py-2.5 text-left font-medium text-slate-500 text-xs">
                                             Role
                                           </th>
-                                          <th className="px-3 py-2.5 text-left font-medium text-slate-300 text-xs">
+                                          <th className="px-3 py-2.5 text-left font-medium text-slate-500 text-xs">
                                             Action
                                           </th>
                                         </tr>
                                       </thead>
-                                      <tbody className="bg-slate-800/30">
+                                      <tbody className="bg-white">
                                         {reg.participants.map(
                                           (participant, pIndex) => (
                                             <tr
                                               key={participant._id}
-                                              className="border-t border-white/5 hover:bg-white/5"
+                                              className="border-t border-slate-200 hover:bg-slate-50"
                                             >
-                                              <td className="px-3 py-2.5 text-white">
+                                              <td className="px-3 py-2.5 text-slate-900">
                                                 {participant.name}
                                               </td>
-                                              <td className="px-3 py-2.5 text-slate-400">
+                                              <td className="px-3 py-2.5 text-slate-600">
                                                 {participant.email}
                                               </td>
-                                              <td className="px-3 py-2.5 text-slate-400">
+                                              <td className="px-3 py-2.5 text-slate-600">
                                                 {participant.rollNumber}
                                               </td>
-                                              <td className="px-3 py-2.5 text-slate-400">
+                                              <td className="px-3 py-2.5 text-slate-600">
                                                 {participant.contactNumber}
                                               </td>
-                                              <td className="px-3 py-2.5 text-slate-400">
+                                              <td className="px-3 py-2.5 text-slate-600">
                                                 {participant.gender}
                                               </td>
                                               <td className="px-3 py-2.5">
                                                 {participant.isLeader ? (
-                                                  <span className="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs px-2 py-1 rounded-full font-medium">
+                                                  <span className="bg-amber-100 text-amber-700 border border-amber-200 text-xs px-2 py-1 rounded-full font-medium">
                                                     Leader
                                                   </span>
                                                 ) : (
@@ -641,7 +641,7 @@ export default function AdminDashboard() {
                                                         participant.name
                                                       )
                                                     }
-                                                    className="text-red-400 hover:text-red-300 text-xs font-medium"
+                                                    className="text-red-500 hover:text-red-700 text-xs font-medium"
                                                   >
                                                     Remove
                                                   </button>
@@ -663,11 +663,11 @@ export default function AdminDashboard() {
                                     {reg.participants.map((participant) => (
                                       <div
                                         key={participant._id}
-                                        className="bg-slate-800/70 border border-white/5 rounded-lg p-3 text-xs"
+                                        className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs"
                                       >
                                         <div className="flex justify-between items-start mb-2">
                                           <div>
-                                            <p className="font-semibold text-white">
+                                            <p className="font-semibold text-slate-900">
                                               {participant.name}
                                             </p>
                                             <p className="text-slate-500">
@@ -675,7 +675,7 @@ export default function AdminDashboard() {
                                             </p>
                                           </div>
                                           {participant.isLeader ? (
-                                            <span className="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full text-xs font-medium">
+                                            <span className="bg-amber-100 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full text-xs font-medium">
                                               Leader
                                             </span>
                                           ) : (
@@ -690,17 +690,17 @@ export default function AdminDashboard() {
                                                     participant.name
                                                   )
                                                 }
-                                                className="text-red-400 text-xs font-medium"
+                                                className="text-red-500 text-xs font-medium"
                                               >
                                                 Remove
                                               </button>
                                             )
                                           )}
                                         </div>
-                                        <p className="text-slate-400 truncate">
+                                        <p className="text-slate-600 truncate">
                                           {participant.email}
                                         </p>
-                                        <p className="text-slate-400">
+                                        <p className="text-slate-600">
                                           {participant.contactNumber} •{" "}
                                           {participant.gender}
                                         </p>
@@ -796,13 +796,13 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-slate-900 border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-slate-900 px-6 py-4 border-b border-white/10 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-white">Add New Event</h2>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="sticky top-0 bg-white px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-slate-900">Add New Event</h2>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white text-2xl p-1 transition-colors"
+            className="text-slate-400 hover:text-slate-600 text-2xl p-1 transition-colors"
           >
             ×
           </button>
@@ -810,7 +810,7 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Event Name *
             </label>
             <input
@@ -823,14 +823,14 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
                   slug: generateSlug(e.target.value),
                 });
               }}
-              className="w-full px-4 py-3 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
+              className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
               placeholder="Enter event name"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               URL Slug *
             </label>
             <input
@@ -839,7 +839,7 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
               onChange={(e) =>
                 setFormData({ ...formData, slug: e.target.value })
               }
-              className="w-full px-4 py-3 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
+              className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
               placeholder="event-url-slug"
               required
             />
@@ -849,7 +849,7 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Description *
             </label>
             <textarea
@@ -857,7 +857,7 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="w-full px-4 py-3 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all resize-none"
+              className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all resize-none"
               rows={3}
               placeholder="Describe your event..."
               required
@@ -865,7 +865,7 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Event Date *
             </label>
             <input
@@ -875,14 +875,14 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
                 setFormData({ ...formData, date: e.target.value })
               }
               min={new Date().toISOString().split("T")[0]}
-              className="w-full px-4 py-3 bg-slate-800/50 border border-white/10 rounded-xl text-white focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
+              className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
               required
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Min Team Size
               </label>
               <input
@@ -895,11 +895,11 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
                   })
                 }
                 min="1"
-                className="w-full px-4 py-3 bg-slate-800/50 border border-white/10 rounded-xl text-white focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
+                className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Max Team Size
               </label>
               <input
@@ -912,7 +912,7 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
                   })
                 }
                 min="1"
-                className="w-full px-4 py-3 bg-slate-800/50 border border-white/10 rounded-xl text-white focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
+                className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
               />
             </div>
           </div>
@@ -927,7 +927,7 @@ function EventFormModal({ onClose }: { onClose: () => void }) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-3 border border-white/10 text-slate-300 rounded-xl hover:bg-white/5 transition font-medium"
+              className="flex-1 px-4 py-3 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition font-medium"
             >
               Cancel
             </button>

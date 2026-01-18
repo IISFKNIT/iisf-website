@@ -145,7 +145,7 @@ export default function RegistrationForm({
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-white text-slate-900">
       <Navbar />
 
       {/* Hero Section */}
@@ -177,7 +177,7 @@ export default function RegistrationForm({
           </motion.h1>
 
           <motion.p
-            className="text-slate-400"
+            className="text-slate-600"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -191,7 +191,7 @@ export default function RegistrationForm({
       <section className="py-8 px-4 sm:px-6 lg:px-8 pb-20">
         <div className="max-w-4xl mx-auto">
           <motion.div
-            className="rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-sm overflow-hidden"
+            className="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -213,13 +213,13 @@ export default function RegistrationForm({
 
               {!registrationType ? (
                 <div className="py-8">
-                  <h2 className="text-xl font-bold text-white text-center mb-8">
+                  <h2 className="text-xl font-bold text-slate-900 text-center mb-8">
                     Choose Registration Type
                   </h2>
                   <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row justify-center items-center">
                     <motion.button
                       onClick={() => handleTypeSelection("individual")}
-                      className="flex flex-col items-center justify-center w-full sm:w-64 h-44 rounded-2xl border-2 border-white/10 bg-slate-800/50 hover:border-orange-500/50 hover:bg-slate-800 transition-all group"
+                      className="flex flex-col items-center justify-center w-full sm:w-64 h-44 rounded-2xl border-2 border-slate-200 bg-white hover:border-orange-500/50 hover:bg-slate-50 transition-all group shadow-sm"
                       whileHover={{ scale: 1.02, y: -5 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -238,7 +238,7 @@ export default function RegistrationForm({
                           />
                         </svg>
                       </div>
-                      <span className="text-lg font-bold text-white group-hover:text-orange-400 transition-colors">
+                      <span className="text-lg font-bold text-slate-900 group-hover:text-orange-500 transition-colors">
                         Individual
                       </span>
                       <span className="text-sm text-slate-500 mt-1">
@@ -248,7 +248,7 @@ export default function RegistrationForm({
 
                     <motion.button
                       onClick={() => handleTypeSelection("team")}
-                      className="flex flex-col items-center justify-center w-full sm:w-64 h-44 rounded-2xl border-2 border-white/10 bg-slate-800/50 hover:border-blue-500/50 hover:bg-slate-800 transition-all group"
+                      className="flex flex-col items-center justify-center w-full sm:w-64 h-44 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-500/50 hover:bg-slate-50 transition-all group shadow-sm"
                       whileHover={{ scale: 1.02, y: -5 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -267,7 +267,7 @@ export default function RegistrationForm({
                           />
                         </svg>
                       </div>
-                      <span className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">
+                      <span className="text-lg font-bold text-slate-900 group-hover:text-blue-500 transition-colors">
                         Team
                       </span>
                       <span className="text-sm text-slate-500 mt-1">
@@ -287,7 +287,7 @@ export default function RegistrationForm({
                   <button
                     type="button"
                     onClick={() => setRegistrationType(null)}
-                    className="text-sm text-slate-400 hover:text-white flex items-center gap-2 transition-colors"
+                    className="text-sm text-slate-500 hover:text-slate-800 flex items-center gap-2 transition-colors"
                   >
                     <svg
                       className="w-4 h-4"
@@ -308,11 +308,11 @@ export default function RegistrationForm({
                   {/* Team Name */}
                   {registrationType === "team" && (
                     <div className="space-y-2">
-                      <h3 className="text-lg font-bold text-white border-b border-white/10 pb-3">
+                      <h3 className="text-lg font-bold text-slate-900 border-b border-slate-200 pb-3">
                         Team Information
                       </h3>
                       <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-2">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
                           Team Name
                         </label>
                         <input
@@ -321,7 +321,7 @@ export default function RegistrationForm({
                           value={teamName}
                           onChange={(e) => setTeamName(e.target.value)}
                           required
-                          className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
+                          className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
                         />
                       </div>
                     </div>
@@ -329,8 +329,8 @@ export default function RegistrationForm({
 
                   {/* Participants */}
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                      <h3 className="text-lg font-bold text-white">
+                    <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                      <h3 className="text-lg font-bold text-slate-900">
                         {registrationType === "individual"
                           ? "Participant Details"
                           : "Team Members"}
@@ -351,13 +351,13 @@ export default function RegistrationForm({
                     {participants.map((participant, index) => (
                       <motion.div
                         key={participant.id}
-                        className="p-5 rounded-xl bg-slate-800/30 border border-white/5"
+                        className="p-5 rounded-xl bg-slate-50 border border-slate-200"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
                       >
                         <div className="flex justify-between items-center mb-4">
-                          <span className="text-sm font-medium text-orange-400">
+                          <span className="text-sm font-medium text-orange-600">
                             {registrationType === "individual"
                               ? "Your Information"
                               : index === 0
@@ -380,7 +380,7 @@ export default function RegistrationForm({
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-1.5">
+                            <label className="block text-sm font-medium text-slate-600 mb-1.5">
                               Full Name
                             </label>
                             <input
@@ -395,12 +395,12 @@ export default function RegistrationForm({
                                 )
                               }
                               required
-                              className="w-full px-4 py-2.5 rounded-lg bg-slate-800/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50 transition-all text-sm"
+                              className="w-full px-4 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500/50 transition-all text-sm"
                             />
                           </div>
 
                           <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-1.5">
+                            <label className="block text-sm font-medium text-slate-600 mb-1.5">
                               Roll Number
                             </label>
                             <input
@@ -415,12 +415,12 @@ export default function RegistrationForm({
                                 )
                               }
                               required
-                              className="w-full px-4 py-2.5 rounded-lg bg-slate-800/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50 transition-all text-sm"
+                              className="w-full px-4 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500/50 transition-all text-sm"
                             />
                           </div>
 
                           <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-1.5">
+                            <label className="block text-sm font-medium text-slate-600 mb-1.5">
                               Gender
                             </label>
                             <select
@@ -433,25 +433,25 @@ export default function RegistrationForm({
                                 )
                               }
                               required
-                              className="w-full px-4 py-2.5 rounded-lg bg-slate-800/50 border border-white/10 text-white focus:outline-none focus:border-orange-500/50 transition-all text-sm"
+                              className="w-full px-4 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-orange-500/50 transition-all text-sm"
                             >
-                              <option value="" className="bg-slate-800">
+                              <option value="" className="bg-white text-slate-900">
                                 Select Gender
                               </option>
-                              <option value="Male" className="bg-slate-800">
+                              <option value="Male" className="bg-white text-slate-900">
                                 Male
                               </option>
-                              <option value="Female" className="bg-slate-800">
+                              <option value="Female" className="bg-white text-slate-900">
                                 Female
                               </option>
-                              <option value="Other" className="bg-slate-800">
+                              <option value="Other" className="bg-white text-slate-900">
                                 Other
                               </option>
                             </select>
                           </div>
 
                           <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-1.5">
+                            <label className="block text-sm font-medium text-slate-600 mb-1.5">
                               Mobile Number
                             </label>
                             <input
@@ -466,12 +466,12 @@ export default function RegistrationForm({
                                 )
                               }
                               required
-                              className="w-full px-4 py-2.5 rounded-lg bg-slate-800/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50 transition-all text-sm"
+                              className="w-full px-4 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500/50 transition-all text-sm"
                             />
                           </div>
 
                           <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-slate-400 mb-1.5">
+                            <label className="block text-sm font-medium text-slate-600 mb-1.5">
                               Email
                             </label>
                             <input
@@ -486,7 +486,7 @@ export default function RegistrationForm({
                                 )
                               }
                               required
-                              className="w-full px-4 py-2.5 rounded-lg bg-slate-800/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50 transition-all text-sm"
+                              className="w-full px-4 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500/50 transition-all text-sm"
                             />
                           </div>
                         </div>

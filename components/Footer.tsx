@@ -54,7 +54,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-white/10 bg-slate-950">
+    <footer className="border-t border-slate-200 bg-slate-50 text-slate-900 shadow-[0_-5px_20px_rgba(0,0,0,0.02)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Section 1: Logo & Introduction */}
@@ -66,11 +66,11 @@ export default function Footer() {
                 className="h-12 w-auto object-contain"
               />
               <div>
-                <h3 className="text-lg font-bold text-white">IISF</h3>
-                <p className="text-xs text-orange-400">KNIT Sultanpur</p>
+                <h3 className="text-lg font-bold text-slate-900">IISF</h3>
+                <p className="text-xs text-orange-500 font-medium">KNIT Sultanpur</p>
               </div>
             </div>
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <p className="text-slate-600 text-sm leading-relaxed">
               Programming and Tech Skills Club at KNIT Sultanpur. Empowering
               students with cutting-edge programming skills and fostering
               innovation.
@@ -84,7 +84,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-orange-500/20 hover:border-orange-500/50 transition-all"
+                  className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-orange-500 hover:border-orange-200 hover:shadow-md transition-all"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -95,13 +95,13 @@ export default function Footer() {
 
           {/* Section 2: Quick Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-slate-900 font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-slate-400 text-sm hover:text-orange-400 transition-colors flex items-center gap-2"
+                    className="text-slate-600 text-sm hover:text-orange-500 transition-colors flex items-center gap-2"
                   >
                     <svg
                       className="w-3 h-3"
@@ -123,13 +123,13 @@ export default function Footer() {
 
           {/* Section 3: Resources */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Resources</h4>
+            <h4 className="text-slate-900 font-bold mb-4">Resources</h4>
             <ul className="space-y-2">
               {resourceLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-slate-400 text-sm hover:text-orange-400 transition-colors flex items-center gap-2"
+                    className="text-slate-600 text-sm hover:text-orange-500 transition-colors flex items-center gap-2"
                   >
                     <svg
                       className="w-3 h-3"
@@ -151,11 +151,11 @@ export default function Footer() {
 
           {/* Section 4: Contact */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Contact</h4>
+            <h4 className="text-slate-900 font-bold mb-4">Contact</h4>
             <ul className="space-y-3">
-              <li className="flex items-start gap-3 text-sm text-slate-400">
+              <li className="flex items-start gap-3 text-sm text-slate-600">
                 <svg
-                  className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5"
+                  className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -178,9 +178,9 @@ export default function Footer() {
                   Sultanpur, UP
                 </span>
               </li>
-              <li className="flex items-center gap-3 text-sm text-slate-400">
+              <li className="flex items-center gap-3 text-sm text-slate-600">
                 <svg
-                  className="w-5 h-5 text-orange-400 flex-shrink-0"
+                  className="w-5 h-5 text-orange-500 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -194,14 +194,14 @@ export default function Footer() {
                 </svg>
                 <a
                   href="mailto:iisf@knit.ac.in"
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-orange-500 transition-colors"
                 >
                   iisf@knit.ac.in
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-sm text-slate-400">
+              <li className="flex items-center gap-3 text-sm text-slate-600">
                 <svg
-                  className="w-5 h-5 text-orange-400 flex-shrink-0"
+                  className="w-5 h-5 text-orange-500 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -215,7 +215,7 @@ export default function Footer() {
                 </svg>
                 <a
                   href="tel:+917500380171"
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-orange-500 transition-colors"
                 >
                   +91 75003 80171
                 </a>
@@ -225,7 +225,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10">
+        <div className="mt-12 pt-8 border-t border-slate-200">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-sm text-slate-500 text-center sm:text-left">
               © {new Date().getFullYear()}, Innovation, Incubation and Startup

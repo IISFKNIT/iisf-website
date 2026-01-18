@@ -42,12 +42,12 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-white text-slate-900">
       <Navbar />
 
       {/* Background effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.15),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(59,130,246,0.1),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.1),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(59,130,246,0.05),transparent_50%)]" />
 
       <div className="relative flex items-center justify-center min-h-screen px-4 pt-20">
         <motion.div
@@ -56,7 +56,7 @@ export default function AdminLogin() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-sm p-8">
+          <div className="rounded-2xl border border-slate-200 bg-white shadow-xl p-8">
             <div className="text-center mb-8">
               <motion.div
                 className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 flex items-center justify-center mb-4"
@@ -65,7 +65,7 @@ export default function AdminLogin() {
                 transition={{ delay: 0.2, type: "spring" }}
               >
                 <svg
-                  className="w-8 h-8 text-orange-400"
+                  className="w-8 h-8 text-orange-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -78,10 +78,10 @@ export default function AdminLogin() {
                   />
                 </svg>
               </motion.div>
-              <h1 className="text-2xl font-bold text-white mb-2">
+              <h1 className="text-2xl font-bold text-slate-900 mb-2">
                 Admin Login
               </h1>
-              <p className="text-slate-400 text-sm">
+              <p className="text-slate-500 text-sm">
                 Enter password to access dashboard
               </p>
             </div>
@@ -90,7 +90,7 @@ export default function AdminLogin() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-slate-300 mb-2"
+                  className="block text-sm font-medium text-slate-700 mb-2"
                 >
                   Password
                 </label>
@@ -99,7 +99,7 @@ export default function AdminLogin() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
                   placeholder="Enter admin password"
                   required
                   autoFocus
@@ -108,7 +108,7 @@ export default function AdminLogin() {
 
               {error && (
                 <motion.div
-                  className="bg-red-500/20 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm"
+                  className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-xl text-sm"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >

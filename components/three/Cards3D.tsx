@@ -66,14 +66,15 @@ function GlassCard({ data, position, index }: GlassCardProps) {
         {/* Glass card background */}
         <RoundedBox args={[2.8, 3.5, 0.15]} radius={0.15} smoothness={4}>
           <meshPhysicalMaterial
-            color="#1e293b"
+            color="#ffffff"
             transparent
-            opacity={0.7}
-            roughness={0.1}
+            opacity={0.8}
+            roughness={0.2}
             metalness={0.1}
-            transmission={0.3}
+            transmission={0.2}
             thickness={0.5}
             envMapIntensity={1}
+            side={THREE.DoubleSide}
           />
         </RoundedBox>
 
@@ -83,7 +84,7 @@ function GlassCard({ data, position, index }: GlassCardProps) {
           <meshBasicMaterial
             color={data.color}
             transparent
-            opacity={hovered ? 0.3 : 0.1}
+            opacity={hovered ? 0.3 : 0.05}
           />
         </mesh>
 
@@ -110,7 +111,7 @@ function GlassCard({ data, position, index }: GlassCardProps) {
             {/* Rank */}
             <div
               className="absolute -top-2 right-2 w-10 h-10 rounded-full flex items-center justify-center text-lg font-black"
-              style={{ backgroundColor: data.color, color: "#0f172a" }}
+              style={{ backgroundColor: data.color, color: "#ffffff" }}
             >
               #{index + 1}
             </div>
@@ -119,13 +120,13 @@ function GlassCard({ data, position, index }: GlassCardProps) {
             <div className="text-5xl mb-3">{data.icon}</div>
 
             {/* Company Name */}
-            <h3 className="text-white font-bold text-sm leading-tight mb-4 px-2">
+            <h3 className="text-slate-900 font-bold text-sm leading-tight mb-4 px-2">
               {data.name}
             </h3>
 
             {/* Revenue */}
-            <div className="border-t border-white/20 pt-3">
-              <p className="text-[10px] uppercase tracking-wider text-white/50 mb-1">
+            <div className="border-t border-slate-200 pt-3">
+              <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-1">
                 Revenue
               </p>
               <p className="text-2xl font-black" style={{ color: data.color }}>

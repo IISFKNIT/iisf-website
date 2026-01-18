@@ -70,7 +70,6 @@ const EventSchema = new Schema<IEvent>(
   }
 );
 
-EventSchema.index({ slug: 1 });
 EventSchema.index({ isActive: 1 });
 
 const Event = models.Event || mongoose.model<IEvent>("Event", EventSchema);
