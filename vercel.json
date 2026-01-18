@@ -4,9 +4,5 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "regions": ["bom1"],
-  "env": {
-    "MONGODB_URI": "@mongodb_uri",
-    "ADMIN_PASSWORD": "@admin_password"
-  }
+  "regions": ["bom1"]
 }
