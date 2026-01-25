@@ -65,7 +65,7 @@ export function isNonEmptyString(value: unknown): value is string {
 
 export function isValidGender(gender: string): boolean {
   return ["Male", "Female", "Other", "male", "female", "other"].includes(
-    gender
+    gender,
   );
 }
 
@@ -77,7 +77,7 @@ export function validateParticipant(
     contactNumber?: string;
     email?: string;
   },
-  label: string = "Participant"
+  label: string = "Participant",
 ): ValidationResult {
   if (!isNonEmptyString(data.name)) {
     return { isValid: false, error: `${label} name is required` };
@@ -139,7 +139,7 @@ export function validateRegistration(data: RegistrationData): ValidationResult {
       contactNumber: data.leaderContactNumber,
       email: data.leaderEmail,
     },
-    "Leader"
+    "Leader",
   );
 
   if (!leaderValidation.isValid) {
@@ -171,7 +171,7 @@ export function validateRegistration(data: RegistrationData): ValidationResult {
     for (let i = 0; i < teamMembers.length; i++) {
       const memberValidation = validateParticipant(
         teamMembers[i],
-        `Team member ${i + 1}`
+        `Team member ${i + 1}`,
       );
       if (!memberValidation.isValid) {
         return memberValidation;
@@ -244,6 +244,80 @@ export function validateEvent(data: EventData): ValidationResult {
     (data.minTeamSize < 1 || data.minTeamSize > 10)
   ) {
     return { isValid: false, error: "Min team size must be between 1 and 10" };
+  }
+
+  return { isValid: true };
+}
+
+export interface StartupData {
+  name: string;
+  slug: string;
+  email: string;
+  mobileNumber: string;
+  incubatedDate: string;
+  status: string;
+  incubationDetails?: string;
+  website?: string;
+}
+
+const VALID_STATUSES = ["incubated", "non-incubated"];
+
+export function validateStartup(data: StartupData): ValidationResult {
+  if (!isNonEmptyString(data.name)) {
+    return { isValid: false, error: "Startup name is required" };
+  }
+
+  if (data.name.length < 2 || data.name.length > 100) {
+    return { isValid: false, error: "Startup name must be 2-100 characters" };
+  }
+
+  if (!isNonEmptyString(data.slug)) {
+    return { isValid: false, error: "Startup slug is required" };
+  }
+
+  if (!isValidSlug(data.slug)) {
+    return {
+      isValid: false,
+      error: "Slug can only contain lowercase letters, numbers, and hyphens",
+    };
+  }
+
+  if (!isNonEmptyString(data.email)) {
+    return { isValid: false, error: "Email is required" };
+  }
+
+  if (!isValidEmail(data.email)) {
+    return { isValid: false, error: "Invalid email format" };
+  }
+
+  if (!isNonEmptyString(data.mobileNumber)) {
+    return { isValid: false, error: "Mobile number is required" };
+  }
+
+  if (!isValidPhone(data.mobileNumber)) {
+    return { isValid: false, error: "Mobile number must be 10 digits" };
+  }
+
+  if (!isNonEmptyString(data.incubatedDate)) {
+    return { isValid: false, error: "Incubated date is required" };
+  }
+
+  if (!isValidDate(data.incubatedDate)) {
+    return {
+      isValid: false,
+      error: "Invalid date format. Use YYYY-MM-DD (e.g., 2025-01-15)",
+    };
+  }
+
+  if (!isNonEmptyString(data.status)) {
+    return { isValid: false, error: "Status is required" };
+  }
+
+  if (!VALID_STATUSES.includes(data.status)) {
+    return {
+      isValid: false,
+      error: `Status must be one of: ${VALID_STATUSES.join(", ")}`,
+    };
   }
 
   return { isValid: true };

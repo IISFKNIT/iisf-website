@@ -48,7 +48,9 @@ export default function Navbar() {
               <span className="text-base font-bold text-slate-900 tracking-wide">
                 IISF
               </span>
-              <span className="text-[10px] text-slate-500 font-medium">KNIT Sultanpur</span>
+              <span className="text-[10px] text-slate-500 font-medium">
+                KNIT Sultanpur
+              </span>
             </div>
           </Link>
 
@@ -59,6 +61,12 @@ export default function Navbar() {
               className="text-slate-600 hover:text-slate-900 font-medium transition px-4 py-2 rounded-lg hover:bg-slate-100"
             >
               Home
+            </Link>
+            <Link
+              href="/startup"
+              className="text-slate-600 hover:text-slate-900 font-medium transition px-4 py-2 rounded-lg hover:bg-slate-100"
+            >
+              Startups
             </Link>
             <Link href="/events">
               <motion.button
@@ -118,6 +126,13 @@ export default function Navbar() {
                   className="text-slate-600 hover:text-slate-900 font-medium transition px-3 py-2 rounded-lg hover:bg-slate-50"
                 >
                   Home
+                </Link>
+                <Link
+                  href="/startup"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-slate-600 hover:text-slate-900 font-medium transition px-3 py-2 rounded-lg hover:bg-slate-50"
+                >
+                  Startups
                 </Link>
                 <Link
                   href="/events"
