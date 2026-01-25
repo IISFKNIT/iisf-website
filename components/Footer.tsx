@@ -6,7 +6,7 @@ export default function Footer() {
   const quickLinks = [
     { name: "Home", href: "/" },
     { name: "Events", href: "/events" },
-    { name: "Leaderboard", href: "#" },
+    { name: "Startups", href: "/startup" },
     { name: "Team", href: "#" },
   ];
 
@@ -67,7 +67,9 @@ export default function Footer() {
               />
               <div>
                 <h3 className="text-lg font-bold text-slate-900">IISF</h3>
-                <p className="text-xs text-orange-500 font-medium">KNIT Sultanpur</p>
+                <p className="text-xs text-orange-500 font-medium">
+                  KNIT Sultanpur
+                </p>
               </div>
             </div>
             <p className="text-slate-600 text-sm leading-relaxed">
