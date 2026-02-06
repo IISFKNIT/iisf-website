@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Startup from "@/models/Startup";
 import { validateStartup } from "@/lib/validations";
+import { deleteImage } from "@/lib/cloudinary";
 import {
   successResponse,
   badRequestResponse,
@@ -59,6 +60,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
       incubationDetails,
       status,
       website,
+      image,
       isActive,
     } = body;
 
@@ -91,6 +93,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
     if (status !== undefined) updateData.status = status;
     if (website !== undefined)
       updateData.website = website?.trim() || undefined;
+    if (image !== undefined) updateData.image = image?.trim() || undefined;
     if (isActive !== undefined) updateData.isActive = isActive;
 
     const startup = await Startup.findByIdAndUpdate(id, updateData, {
@@ -119,11 +122,24 @@ export async function DELETE(request: NextRequest, { params }: Params) {
 
     await dbConnect();
 
-    const startup = await Startup.findByIdAndDelete(id).lean();
+    // First find the startup to get the image URL
+    const startup = await Startup.findById(id).lean();
 
     if (!startup) {
       return notFoundResponse("Startup not found");
     }
+
+    // Delete image from Cloudinary if exists
+    if (startup.image) {
+      const urlParts = startup.image.split("/");
+      const publicIdWithExt = urlParts.slice(-2).join("/").split(".")[0];
+      if (publicIdWithExt) {
+        await deleteImage(publicIdWithExt);
+      }
+    }
+
+    // Now delete the startup from database
+    await Startup.findByIdAndDelete(id);
 
     return successResponse(null, "Startup deleted successfully");
   } catch (error) {

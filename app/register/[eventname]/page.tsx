@@ -22,5 +22,15 @@ export default async function EventRegistrationPage({
     notFound();
   }
 
-  return <RegistrationForm eventName={event.name} />;
+  return (
+    <RegistrationForm
+      eventName={event.name}
+      eventSlug={event.slug}
+      eventDescription={event.description}
+      eventDate={event.date}
+      eventImage={event.image || undefined}
+      rulebook={event.rulebook || undefined}
+      whatsappLink={event.whatsappLink || undefined}
+    />
+  );
 }

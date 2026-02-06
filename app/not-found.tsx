@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -24,43 +23,11 @@ export default function NotFound() {
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating orbs */}
-        <motion.div
-          className="absolute top-20 left-20 w-72 h-72 bg-orange-500/20 rounded-full blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-20 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl"
-          animate={{
-            x: [0, -30, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+        <div className="absolute top-20 left-20 w-72 h-72 bg-orange-500/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl animate-pulse" />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl animate-spin"
+          style={{ animationDuration: "15s" }}
         />
 
         {/* Grid pattern */}
@@ -68,21 +35,14 @@ export default function NotFound() {
 
         {/* Floating particles */}
         {[...Array(20)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute w-1 h-1 bg-orange-400/50 rounded-full"
+            className="absolute w-1 h-1 bg-orange-400/50 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [-20, 20, -20],
-              opacity: [0.2, 0.8, 0.2],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
+              animationDelay: `${Math.random() * 2}s`,
+              animationDuration: `${3 + Math.random() * 2}s`,
             }}
           />
         ))}
@@ -91,104 +51,50 @@ export default function NotFound() {
       {/* Main content */}
       <div className="relative z-10 text-center px-4">
         {/* 3D 404 Text */}
-        <motion.div
+        <div
           style={{
             transform: `perspective(1000px) rotateX(${mousePosition.y * 0.5}deg) rotateY(${mousePosition.x * 0.5}deg)`,
           }}
-          className="mb-8"
+          className="mb-8 transition-transform duration-100"
         >
-          <motion.h1
-            className="text-[150px] sm:text-[200px] md:text-[250px] font-black leading-none select-none"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <h1 className="text-[150px] sm:text-[200px] md:text-[250px] font-black leading-none select-none">
             <span className="bg-gradient-to-br from-orange-400 via-amber-500 to-orange-600 bg-clip-text text-transparent drop-shadow-2xl relative">
               4
-              <motion.span
-                className="absolute inset-0 bg-gradient-to-br from-orange-400/20 via-amber-500/20 to-orange-600/20 blur-xl"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
             </span>
-            <motion.span
-              className="inline-block text-white/10"
-              animate={{
-                rotateY: [0, 360],
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+            <span
+              className="inline-block text-white/10 animate-spin"
+              style={{ animationDuration: "4s" }}
             >
               0
-            </motion.span>
+            </span>
             <span className="bg-gradient-to-br from-orange-400 via-amber-500 to-orange-600 bg-clip-text text-transparent drop-shadow-2xl">
               4
             </span>
-          </motion.h1>
-        </motion.div>
+          </h1>
+        </div>
 
         {/* Glitch effect text */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-4"
-        >
+        <div className="mb-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
             Oops! Page{" "}
             <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
               Not Found
             </span>
           </h2>
-        </motion.div>
+        </div>
 
-        <motion.p
-          className="text-slate-400 text-lg max-w-md mx-auto mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-        >
+        <p className="text-slate-400 text-lg max-w-md mx-auto mb-8">
           The page you&apos;re looking for doesn&apos;t exist or has been moved
           to another dimension.
-        </motion.p>
+        </p>
 
         {/* Animated rocket */}
-        <motion.div
-          className="text-6xl mb-8"
-          animate={{
-            y: [-10, 10, -10],
-            rotate: [-5, 5, -5],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          🚀
-        </motion.div>
+        <div className="text-6xl mb-8 animate-bounce">🚀</div>
 
         {/* Action buttons */}
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-        >
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link href="/">
-            <motion.button
-              className="px-8 py-4 rounded-full font-bold text-white bg-gradient-to-r from-orange-500 to-amber-500 shadow-lg shadow-orange-500/30 flex items-center gap-2"
-              whileHover={{
-                scale: 1.05,
-                y: -2,
-                boxShadow: "0 20px 40px rgba(249, 115, 22, 0.4)",
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
+            <button className="px-8 py-4 rounded-full font-bold text-white bg-gradient-to-r from-orange-500 to-amber-500 shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-105 hover:-translate-y-0.5 active:scale-[0.98] transition-all flex items-center gap-2">
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -203,15 +109,11 @@ export default function NotFound() {
                 />
               </svg>
               Go Home
-            </motion.button>
+            </button>
           </Link>
 
           <Link href="/startup">
-            <motion.button
-              className="px-8 py-4 rounded-full font-bold text-white border-2 border-slate-600 hover:border-orange-500/50 transition-colors flex items-center gap-2"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
+            <button className="px-8 py-4 rounded-full font-bold text-white border-2 border-slate-600 hover:border-orange-500/50 hover:scale-105 hover:-translate-y-0.5 active:scale-[0.98] transition-all flex items-center gap-2">
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -226,34 +128,17 @@ export default function NotFound() {
                 />
               </svg>
               View Startups
-            </motion.button>
+            </button>
           </Link>
-        </motion.div>
+        </div>
 
         {/* Animated line */}
-        <motion.div
-          className="mt-12 flex justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          <motion.div
-            className="h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: 200 }}
-            transition={{ duration: 1, delay: 1.2 }}
-          />
-        </motion.div>
+        <div className="mt-12 flex justify-center">
+          <div className="h-1 w-48 bg-gradient-to-r from-transparent via-orange-500 to-transparent rounded-full" />
+        </div>
 
         {/* IISF branding */}
-        <motion.p
-          className="mt-8 text-slate-500 text-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-        >
-          IISF • KNIT Sultanpur
-        </motion.p>
+        <p className="mt-8 text-slate-500 text-sm">IISF • KNIT Sultanpur</p>
       </div>
     </div>
   );

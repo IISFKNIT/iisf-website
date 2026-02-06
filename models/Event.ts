@@ -5,6 +5,9 @@ export interface IEvent extends Document {
   slug: string;
   description: string;
   date: string;
+  image?: string;
+  rulebook?: string;
+  whatsappLink?: string;
   maxTeamSize: number;
   minTeamSize: number;
   isActive: boolean;
@@ -50,6 +53,18 @@ const EventSchema = new Schema<IEvent>(
         message: "Invalid date format. Use YYYY-MM-DD (e.g., 2025-01-15)",
       },
     },
+    image: {
+      type: String,
+      trim: true,
+    },
+    rulebook: {
+      type: String,
+      trim: true,
+    },
+    whatsappLink: {
+      type: String,
+      trim: true,
+    },
     maxTeamSize: {
       type: Number,
       default: 4,
@@ -67,7 +82,7 @@ const EventSchema = new Schema<IEvent>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 EventSchema.index({ isActive: 1 });

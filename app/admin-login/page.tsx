@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import Navbar from "@/components/Navbar";
 
@@ -50,20 +49,10 @@ export default function AdminLogin() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(59,130,246,0.05),transparent_50%)]" />
 
       <div className="relative flex items-center justify-center min-h-screen px-4 pt-20">
-        <motion.div
-          className="max-w-md w-full"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="max-w-md w-full">
           <div className="rounded-2xl border border-slate-200 bg-white shadow-xl p-8">
             <div className="text-center mb-8">
-              <motion.div
-                className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 flex items-center justify-center mb-4"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2, type: "spring" }}
-              >
+              <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 flex items-center justify-center mb-4">
                 <svg
                   className="w-8 h-8 text-orange-500"
                   fill="none"
@@ -77,7 +66,7 @@ export default function AdminLogin() {
                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                   />
                 </svg>
-              </motion.div>
+              </div>
               <h1 className="text-2xl font-bold text-slate-900 mb-2">
                 Admin Login
               </h1>
@@ -107,21 +96,15 @@ export default function AdminLogin() {
               </div>
 
               {error && (
-                <motion.div
-                  className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-xl text-sm"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
+                <div className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-xl text-sm">
                   {error}
-                </motion.div>
+                </div>
               )}
 
-              <motion.button
+              <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 px-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-xl hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-orange-500/25"
-                whileHover={{ scale: loading ? 1 : 1.01 }}
-                whileTap={{ scale: loading ? 1 : 0.99 }}
+                className="w-full py-3.5 px-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-xl hover:opacity-90 hover:scale-[1.01] active:scale-[0.99] transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-orange-500/25"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -146,10 +129,10 @@ export default function AdminLogin() {
                 ) : (
                   "Login"
                 )}
-              </motion.button>
+              </button>
             </form>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
