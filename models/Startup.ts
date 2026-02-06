@@ -9,6 +9,7 @@ export interface IStartup extends Document {
   incubationDetails?: string;
   status: "incubated" | "non-incubated";
   website?: string;
+  image?: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -58,6 +59,10 @@ const StartupSchema = new Schema<IStartup>(
       default: "non-incubated",
     },
     website: {
+      type: String,
+      trim: true,
+    },
+    image: {
       type: String,
       trim: true,
     },

@@ -27,6 +27,9 @@ export interface EventData {
   slug: string;
   description: string;
   date: string;
+  image?: string;
+  rulebook?: string;
+  whatsappLink?: string;
   maxTeamSize?: number;
   minTeamSize?: number;
 }
@@ -258,6 +261,7 @@ export interface StartupData {
   status: string;
   incubationDetails?: string;
   website?: string;
+  image?: string;
 }
 
 const VALID_STATUSES = ["incubated", "non-incubated"];

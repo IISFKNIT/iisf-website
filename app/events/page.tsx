@@ -16,6 +16,9 @@ async function getEvents() {
       slug: event.slug,
       description: event.description,
       date: event.date,
+      image: event.image || null,
+      rulebook: event.rulebook || null,
+      whatsappLink: event.whatsappLink || null,
       isActive: event.isActive,
     }));
   } catch {

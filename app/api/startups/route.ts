@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
       incubationDetails,
       status,
       website,
+      image,
     } = body;
 
     const validation = validateStartup({
@@ -75,6 +76,7 @@ export async function POST(request: NextRequest) {
       incubationDetails: incubationDetails?.trim() || undefined,
       status,
       website: website?.trim() || undefined,
+      image: image?.trim() || undefined,
       isActive: true,
     });
 

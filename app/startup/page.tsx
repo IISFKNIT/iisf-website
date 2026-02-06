@@ -22,6 +22,7 @@ async function getStartups() {
       incubationDetails: startup.incubationDetails || "",
       status: startup.status,
       website: startup.website || "",
+      image: startup.image || "",
     }));
   } catch {
     return [];

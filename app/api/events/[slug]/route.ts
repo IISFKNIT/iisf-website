@@ -3,6 +3,7 @@ import dbConnect from "@/lib/mongodb";
 import Event from "@/models/Event";
 import Registration from "@/models/Registration";
 import Participant from "@/models/Participant";
+import { deleteImage } from "@/lib/cloudinary";
 import {
   successResponse,
   notFoundResponse,
@@ -53,7 +54,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       teamCount: registrations.filter((r) => r.isTeam).length,
       totalParticipants: registrations.reduce(
         (sum, r) => sum + r.totalParticipants,
-        0
+        0,
       ),
     };
 
@@ -79,6 +80,15 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
       return notFoundResponse("Event not found");
     }
 
+    // Delete image from Cloudinary if exists
+    if (event.image) {
+      const urlParts = event.image.split("/");
+      const publicIdWithExt = urlParts.slice(-2).join("/").split(".")[0];
+      if (publicIdWithExt) {
+        await deleteImage(publicIdWithExt);
+      }
+    }
+
     const registrations = await Registration.find({ eventName }).lean();
     const registrationIds = registrations.map((r) => r._id);
 
@@ -91,7 +101,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
         deletedEvent: eventName,
         deletedRegistrations: registrations.length,
       },
-      "Event and all registrations deleted successfully"
+      "Event and all registrations deleted successfully",
     );
   } catch (error) {
     return handleApiError(error, "deleting event");
